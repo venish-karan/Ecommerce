@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -67,7 +68,7 @@ def loginPage(request):
             login(request, user)
             return redirect('/')
         else:
-            messages.error(request, "User Name or Password does not exists")
+            # messages.error(request, "User Name or Password does not exists")
             return redirect('loginPage')
     else:
         return render(request, 'store/login.html')
@@ -171,3 +172,30 @@ def processOrder(request):
         )
 
     return JsonResponse('Payment complete!', safe=False)
+
+def search(request):
+
+    # query = request.GET.get('query')
+    query = request.GET['query']
+
+    if len(query) > 78:
+        # create empty query set
+        products = Product.objects.none()
+    else:
+        # products = Product.objects.all()
+        products = Product.objects.filter(name__icontains=query)
+        # productsName = Product.objects.filter(name__icontains=query)
+        # productsDescription = Product.objects.filter(description__icontains=query)
+        # products = productsName.union(productsDescription)
+
+    if products.count() == 0:
+        messages.error(request, "No Search Results found. Please refine your query")
+    context = {'products': products, 'query': query}
+    return render(request, 'store/search.html', context)
+
+def track_order(request):
+    
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {'cartItems': cartItems}
+    return render(request, 'store/trackOrder.html', context)

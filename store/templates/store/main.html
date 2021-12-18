@@ -77,15 +77,27 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
                </li>
+               <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'cart' %}">Cart <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'checkout' %}">Checkout <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'track_order' %}">Track Order <span class="sr-only">(current)</span></a>
+               </li>
+               
            </ul>
             
             <div class="form-inline my-2 my-lg-0">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form method="get" action="/search" class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
                     <button class="btn btn-warning" type="submit">Search</button>
                 </form>
                 &emsp;
                 {% if request.user.is_authenticated %}
+                    <h5>Hello,{{ request.user }}</h5>
+                    &emsp;
                     <a href="{% url 'logoutUser' %}" class="btn btn-warning">Logout</a>
                 {% else %}
                     <a href="{% url 'loginPage' %}" class="btn btn-warning">Login</a>

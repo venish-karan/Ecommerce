@@ -4,25 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+    <title>Registeration Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-    <form action="{% url 'registerPage' %}" method="post">
-        {% csrf_token %}
-        <input type="text" name="first_name" placeholder="First Name"><br>
-        <input type="text" name="last_name" placeholder="Last Name"><br>
-        <input type="text" name="username" placeholder="User Name"><br>
-        
-        <input type="email" name="email" placeholder="Email"><br>
-        <input type="password" name="password1" placeholder="Password"><br>
-        <input type="password" name="password2" placeholder="Confirm Password"><br>
-        <input type="submit">
-    </form>
-    <div>
-        {% for message in messages %}
-            <h3>{{ message }}</h3>
-        {% endfor %}
-    </div>
+    <section class="vh-10" style="background-color: #508bfc;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+
+                    <h3 class="mb-5">Register User</h3>
+
+                    <div class="form-outline mb-4">
+                        <form action="{% url 'registerPage' %}" method="post">
+                        {% csrf_token %}
+                            <input type="text" name="first_name" placeholder="First Name" id="typeEmailX-2" class="form-control form-control-lg" /><br>
+                            <input type="text" name="last_name" placeholder="Last Name" id="typeEmailX-2" class="form-control form-control-lg" /><br>
+                            <input type="text" name="username" placeholder="User Name" id="typeEmailX-2" class="form-control form-control-lg" /><br>
+                            <input type="text" name="email" placeholder="example@gmail.com" id="typeEmailX-2" class="form-control form-control-lg" /><br>
+
+                            <div class="form-outline mb-4">
+                                <input type="password" name="password1" id="typePasswordX-2" placeholder="Password" class="form-control form-control-lg" /><br>
+                                <input type="password" name="password2" placeholder="User Name" id="typeEmailX-2" class="form-control form-control-lg" />
+                            </div>
+                            
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Create User</button>
+                        </form>
+                </div>
+                    {% for message in messages %}
+                    <center><h3 class="mb-5">{{ message }}</h3></center>
+                    {% endfor %}
+            </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
