@@ -5,15 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <form action="{% url 'loginPage' %}" method='post'>
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="User Name"><br>
-        <input type="password" name="password" placeholder="Password"><br>
-        <input type="submit" value="Sign in">
-        <button><a href="{% url 'registerPage' %}" style="text-decoration: none;">Register</a></button>
-    </form>
+    <div id="login-field">
+        <form action="{% url 'loginPage' %}" method='post'>
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="User Name"><br>
+            <input type="password" name="password" placeholder="Password"><br>
+            <input type="submit" value="Sign in">
+            <button><a href="{% url 'registerPage' %}" style="text-decoration: none;">Register</a></button>
+        </form>
+    </div>
 
     <div>
         {% for message in messages %}

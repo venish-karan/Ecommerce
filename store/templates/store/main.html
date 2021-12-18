@@ -77,21 +77,25 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
                </li>
-            
            </ul>
             
-        <div class="form-inline my-2 my-lg-0">
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'logoutUser' %}" class="btn btn-warning">Logout</a>
-            {% else %}
-	     	    <a href="{% url 'loginPage' %}" class="btn btn-warning">Login</a>
-	     	{% endif %}
-	     	<a href="{% url 'cart' %}">
-	    		<img  id="cart-icon" src="{% static 'images/cart.jpg' %}">
-	    	</a>
-	    	<p id="cart-total">{{ cartItems }}</p>
+            <div class="form-inline my-2 my-lg-0">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-warning" type="submit">Search</button>
+                </form>
+                &emsp;
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'logoutUser' %}" class="btn btn-warning">Logout</a>
+                {% else %}
+                    <a href="{% url 'loginPage' %}" class="btn btn-warning">Login</a>
+                {% endif %}
+                <a href="{% url 'cart' %}">
+                    <img  id="cart-icon" src="{% static 'images/cart.jpg' %}">
+                </a>
+                <p id="cart-total">{{ cartItems }}</p>
 
-	    </div>
+            </div>
         </div>
     </nav>
 
