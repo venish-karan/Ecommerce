@@ -13,7 +13,9 @@
 
     <script type="text/javascript">
         var user = '{{ request.user }}';
-
+        if(user != 'AnonymousUser') {
+            var userEmail = '{{ request.user.email }}';
+        }
         function getToken(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -96,11 +98,15 @@
                 </form>
                 &emsp;
                 {% if request.user.is_authenticated %}
-                    <h5>Hello,{{ request.user }}</h5>
+                    <h5 style="color: white;">Hello, {{ request.user }}</h5>
                     &emsp;
                     <a href="{% url 'logoutUser' %}" class="btn btn-warning">Logout</a>
                 {% else %}
                     <a href="{% url 'loginPage' %}" class="btn btn-warning">Login</a>
+                {% endif %}
+                {% if request.user.customer.seller == True %}
+                    &emsp;
+                    <a href="{% url 'seller' %}" class="btn btn-warning">Seller Account</a>
                 {% endif %}
                 <a href="{% url 'cart' %}">
                     <img  id="cart-icon" src="{% static 'images/cart.jpg' %}">

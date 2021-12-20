@@ -135,6 +135,7 @@
 			console.log('Form Submitted...')
 			document.getElementById('form-button').classList.add("hidden");
 			document.getElementById('payment-info').classList.remove("hidden");
+
 		})
 
 		// document.getElementById('make-payment').addEventListener('click', function(e){
@@ -167,6 +168,9 @@
 			if(user == 'AnonymousUser') {
 				userFormData.name = form.name.value
 				userFormData.email = form.email.value
+			} else {
+				userFormData.name = user;
+				userFormData.email = userEmail;
 			}
 
 			var url = '/process_order/'
@@ -176,7 +180,7 @@
 					'content-Type': 'application/json',
 					'X-CSRFToken':csrftoken,
 				},
-				body: JSON.stringify({'form':userFormData, 'shipping':shippingInfo})
+				body: JSON.stringify({'form':userFormData, 'shipping':shippingInfo})  // , 'track': '{{ items }}'
 			})
 			//promise is called as then here
 			.then((response) => response.json())

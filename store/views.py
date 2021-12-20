@@ -27,6 +27,11 @@ def registerPage(request):
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         email = request.POST['email']
+        seller_account = request.POST['seller_account']
+        if seller_account == 'yes':
+            seller_account = True
+        else:
+            seller_account = False
 
         if password1 == password2:
             if User.objects.filter(username=username).exists():
@@ -39,7 +44,7 @@ def registerPage(request):
             else:
                 user = User.objects.create_user(username=username, password=password1, first_name=first_name, last_name=last_name, email=email)
                 user.save()
-                c = Customer.objects.create(user=user, name=username, email=email)
+                c = Customer.objects.create(user=user, name=username, email=email, seller=seller_account)
                 c.save()
                 
                 print('user created')
@@ -84,6 +89,8 @@ def store(request):
     cartItems = data['cartItems']
 
     products = Product.objects.all()
+
+    # print(request.user.email)
     context = {'products': products, 'cartItems': cartItems, 'shipping':False}
     return render(request, 'store/store.html', context)
 
@@ -114,8 +121,8 @@ def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
+    # print('Action:', action)
+    # print('Product:', productId)
 
     customer = request.user.customer
     product = Product.objects.get(id=productId)
@@ -140,6 +147,7 @@ def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
 
     data = json.loads(request.body)
+    # print(data['track'])
 
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -195,7 +203,65 @@ def search(request):
 
 def track_order(request):
     
-    data = cartData(request)
-    cartItems = data['cartItems']
-    context = {'cartItems': cartItems}
-    return render(request, 'store/trackOrder.html', context)
+    if request.user.is_authenticated:
+        data = cartData(request)
+
+        cartItems = data['cartItems']
+
+        customer = request.user.customer
+        orders = list(Order.objects.filter(customer=customer, complete=True))
+        order_items_num = [i for i in orders]
+        # items = order.orderitem_set.all()
+        items = []
+        for item_num in order_items_num:
+            # print(item_num)
+            items += OrderItem.objects.filter(order=item_num)
+
+        items = items[::-1]
+
+        # print(items)
+        context = {'items': items, 'cartItems': cartItems}
+        
+        return render(request, 'store/trackOrder.html', context)
+    
+    else:
+        return redirect('loginPage')
+
+@login_required(login_url="loginPage")
+def seller(request):
+
+    if request.user.is_authenticated:
+
+        customer = request.user.customer
+
+        try:
+            seller = Customer.objects.get(name=customer, seller=True)
+
+        except Customer.DoesNotExist:
+            # return redirect('loginPage')
+            seller = None
+
+        data = cartData(request)
+        cartItems = data['cartItems']
+
+        if request.method == 'POST':
+            name = request.GET.get('product_name')
+            price = request.GET.get('price')
+            digital = request.GET.get('digital')
+            if(digital == 'yes'):
+                digital = True
+            else:
+                digital = False
+            image = request.GET.get('image')
+
+            Product.objects.create(
+                name=name,
+                price=price,
+                digital=digital,
+                image=image
+            )
+
+        context = {'cartItems': cartItems, 'seller': seller}
+        return render(request, 'store/seller.html', context)
+
+        
