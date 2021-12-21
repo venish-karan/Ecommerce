@@ -27,7 +27,7 @@
             <br>
             <div class="box-element">
                 <div class="cart-row">
-                    <div style="flex: 1;"><strong>Image</strong></div>
+                    <div style="flex: 2;"><strong>Image</strong></div>
                     <div style="flex: 2;"><strong>Item</strong></div>
                     <div style="flex: 1;"><strong>Price</strong></div>
                     <div style="flex: 1;"><strong>Quantity</strong></div>
@@ -37,7 +37,7 @@
                 {% for item in items %}
 
                  <div class="cart-row">
-                    <div style="flex: 1;"><img class="row-image" src="{{ item.product.imageURL }}" alt="..."></div>
+                    <div style="flex: 2;"><img class="row-image" src="{{ item.product.imageURL }}" alt="..."></div>
                     <div style="flex: 2; word-break: break-all;">{{ item.product.name }}</div>
                     <div style="flex: 1;">{{ item.product.price|floatformat:2 }}</div>
                     <div style="flex: 1;">

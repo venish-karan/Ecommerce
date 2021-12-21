@@ -183,6 +183,9 @@ def processOrder(request):
 
 def search(request):
 
+    data = cartData(request)
+
+    cartItems = data['cartItems']
     # query = request.GET.get('query')
     query = request.GET['query']
 
@@ -198,7 +201,7 @@ def search(request):
 
     if products.count() == 0:
         messages.error(request, "No Search Results found. Please refine your query")
-    context = {'products': products, 'query': query}
+    context = {'products': products, 'query': query, 'cartItems': cartItems}
     return render(request, 'store/search.html', context)
 
 @login_required(login_url="loginPage")
