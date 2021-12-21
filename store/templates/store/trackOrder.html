@@ -10,10 +10,10 @@
 				<hr>
                 <!-- <div class="box-element"> -->
                 <div class="cart-row">
-                    <div style="flex: 2;"></div>
+                    <div style="flex: 2;"><strong>Image</strong></div>
                     <div style="flex: 2;"><strong>Item</strong></div>
                     <div style="flex: 1;"><strong>Price</strong></div>
-                    <div style="flex: 1;"><strong>Quantity</strong></div>
+                    <!-- <div style="flex: 1;"><strong>Quantity</strong></div> -->
                     <!-- <div style="flex: 1;"><strong>Total</strong></div> -->
                     <div style="flex: 1;"><strong>Purchased Date</strong></div>
                 </div>
@@ -22,11 +22,11 @@
 
                  <div class="cart-row">
                     <div style="flex: 2;"><img class="row-image" src="{{ item.product.imageURL }}" alt="..."></div>
-                    <div style="flex: 2;">{{ item.product.name }}</div>
+                    <div style="flex: 2; word-break: break-all;">{{ item.product.name }}</div>
                     <div style="flex: 1;">{{ item.product.price|floatformat:2 }}</div>
-                    <div style="flex: 1;">
+                    <!-- <div style="flex: 1;">
                         <p class="quantity">x{{ item.quantity }}</p>
-                    </div>
+                    </div> -->
                     <!-- <div style="flex: 1;">Rs.{{ item.get_total }}</div> -->
                     <div style="flex: 1;">{{ item.date_added }}</div>
                 </div>

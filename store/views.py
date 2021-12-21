@@ -201,6 +201,7 @@ def search(request):
     context = {'products': products, 'query': query}
     return render(request, 'store/search.html', context)
 
+@login_required(login_url="loginPage")
 def track_order(request):
     
     if request.user.is_authenticated:
@@ -243,25 +244,31 @@ def seller(request):
 
         data = cartData(request)
         cartItems = data['cartItems']
+        products = Product.objects.filter(customer=seller)
+        products = products[::-1]
+        print(products)
 
         if request.method == 'POST':
-            name = request.GET.get('product_name')
-            price = request.GET.get('price')
-            digital = request.GET.get('digital')
+            name = request.POST.get('product_name')
+            price = request.POST.get('product_price')
+            digital = request.POST.get('digital')
             if(digital == 'yes'):
                 digital = True
             else:
                 digital = False
-            image = request.GET.get('image')
+            image = request.FILES.get('image')
+            description = request.POST.get('description')
 
             Product.objects.create(
                 name=name,
                 price=price,
                 digital=digital,
-                image=image
+                image=image,
+                description=description,
+                customer=seller,
             )
 
-        context = {'cartItems': cartItems, 'seller': seller}
+        context = {'cartItems': cartItems, 'seller': seller, 'products': products}
         return render(request, 'store/seller.html', context)
 
         

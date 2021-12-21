@@ -55,10 +55,16 @@
 				<hr>
                 <h3>Order Summary</h3>
 				<hr>
+				<div class="cart-row">
+                    <div style="flex: 2;"><strong>Image</strong></div>
+                    <div style="flex: 2;"><strong>Item</strong></div>
+                    <div style="flex: 1;"><strong>Price</strong></div>
+                    <div style="flex: 1;"><strong>Quantity</strong></div>
+                </div>
 				{% for item in items %}
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
-					<div style="flex:2"><p>{{ item.product.name }}</p></div>
+					<div style="flex:2; word-break: break-all;"><p>{{ item.product.name }}</p></div>
 					<div style="flex:1"><p>{{ item.product.price|floatformat:2 }}</p></div>
 					<div style="flex:1"><p>x{{ item.quantity }}</p></div>
 				</div>
