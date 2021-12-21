@@ -75,10 +75,12 @@
         </div>
         
     </div>
-	    <script src="https://www.paypal.com/sdk/js?client-id=AUaL4XoFYPhkShh4fNtaulfvmrQIHDmTHHJH61uJFSXXeB10EIkurap4yV2uypbCcPwuWIjSGOVysUw5&currency=USD"></script>
+	
+	<script src="https://www.paypal.com/sdk/js?client-id=AUaL4XoFYPhkShh4fNtaulfvmrQIHDmTHHJH61uJFSXXeB10EIkurap4yV2uypbCcPwuWIjSGOVysUw5&currency=USD"></script>
 
 
-	<script>
+	<script type="text/javascript">
+
 		var total = '{{ order.get_cart_total }}'
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
@@ -110,9 +112,9 @@
 
 
         }).render('#paypal-button-container');
-    </script>
+	</script>
 
-	<script type="text/javascript">
+    <script type="text/javascript">
 		var shipping = '{{ order.shipping }}';
 		var total = '{{ order.get_cart_total }}'
 
@@ -202,4 +204,7 @@
 			})
 		}
 	</script>
+
+
+	
 {% endblock content %}
